@@ -26,8 +26,8 @@
 
 ## Backlog
 (Open items only. When done, move to CHANGELOG.md before commit.)
-1. **[2026-10-03] Change backend from Ollama to llama.cpp running in WSL**
-   Do instead: serve models via llama.cpp (`llama-server`, OpenAI-compatible API) inside WSL, point Pydantic AI and the embedding path at it instead of `localhost:11434`, and record the decision in a new ADR.
+1. **[2026-10-03] Hybrid backend: llama.cpp (GPU, inference) + Ollama (CPU, embeddings)**
+   Do instead: follow `docs/plans/002-llama-cpp-inference-hybrid.md` phase by phase (Phase 0 is a throwaway tool-calling spike, gate before touching any code); scope narrowed from a full Ollama→llama.cpp swap after assessment showed embeddings should stay on Ollama. Record the decision in ADR 0002 at the Phase 0 gate.
 
 2. **[2026-10-03] High-precision agentic document search (filesystem tools, iterative loop, hybrid retrieval)**
    Do instead: follow `docs/plans/001-precision-search.md` phase by phase (Phase 0 is item 1); move each finished phase to CHANGELOG.md.

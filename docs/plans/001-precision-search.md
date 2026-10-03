@@ -10,7 +10,8 @@ read arbitrary files, or iterate freely, so precision is limited to what pre-chu
 embeddings return. Goal: approach Claude Code-style accuracy, where the agent
 reasons about what to read, searches iteratively, and cites exact file and lines.
 
-Constraints: local models only (Ollama now; llama.cpp in WSL per Backlog item 1),
+Constraints: local models only (Ollama now; hybrid llama.cpp inference + Ollama
+embeddings per Backlog item 1 / `docs/plans/002-llama-cpp-inference-hybrid.md`),
 Pydantic AI, LanceDB, MarkItDown formats, no heavy infrastructure. Keep embedding
 search, the benchmark harness and the Streamlit UI.
 
@@ -35,9 +36,11 @@ search, the benchmark harness and the Streamlit UI.
 
 Each phase is independently shippable. Move each to `CHANGELOG.md` when done.
 
-### Phase 0: Prerequisite, backend swap
-Napkin Backlog item 1 (Ollama to llama.cpp in WSL). Do first or in parallel; keep
-the new tools backend-agnostic (they depend only on Pydantic AI). Needs an ADR.
+### Phase 0: Prerequisite, hybrid backend
+Napkin Backlog item 1: `docs/plans/002-llama-cpp-inference-hybrid.md` (llama.cpp
+inference on GPU, Ollama kept for embeddings on CPU — not a full Ollama swap). Do
+first or in parallel; keep the new tools backend-agnostic (they depend only on
+Pydantic AI). Needs an ADR (0002, at that plan's Phase 0 gate).
 
 ### Phase 1: Filesystem tools (highest impact)
 New module `core/fs_tools.py` with plain functions returning structured, size-capped
@@ -92,20 +95,20 @@ exposes them.
 
 ### Phase 6: Benchmark
 - Extend `bench/questions.jsonl` with `expected_sources` (and a few repo-wide
-  questions). ARCHITECTURE.md says 10 questions but the file has 13; fix it.
+  questions). docs/ARCHITECTURE.md says 10 questions but the file has 13; fix it.
 - Capture tool results in `QuestionResult`; add citation validity (cited
   file/line exists and contains the claim) and source recall/precision columns to
   `_judge_phase` and `_write_summary`.
 - Baseline on current main before Phase 1, then compare after each phase.
 
 ## Decisions (ADRs)
-- 0002: backend swap to llama.cpp (Phase 0).
+- 0002: hybrid inference backend, llama.cpp (GPU) + Ollama (CPU, embeddings) (Phase 0).
 - 0003: agent filesystem access and sandboxing model (Phase 1).
 
 ## Critical files
 `core/agent.py`, `core/document_loader.py`, `core/__init__.py` (exports),
 `interfaces/streamlit_app.py`, `bench/runner.py`, `bench/cli.py`,
-`bench/questions.jsonl`, new `core/fs_tools.py`, `core/config.py`, ARCHITECTURE.md
+`bench/questions.jsonl`, new `core/fs_tools.py`, `core/config.py`, docs/ARCHITECTURE.md
 (tool code excerpt and project tree), `docs/adr/`.
 
 ## Verification
