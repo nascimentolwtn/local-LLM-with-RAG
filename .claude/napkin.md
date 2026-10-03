@@ -26,8 +26,16 @@
 
 ## Backlog
 (Open items only. When done, move to CHANGELOG.md before commit.)
+1. **[2026-10-03] Change backend from Ollama to llama.cpp running in WSL**
+   Do instead: serve models via llama.cpp (`llama-server`, OpenAI-compatible API) inside WSL, point Pydantic AI and the embedding path at it instead of `localhost:11434`, and record the decision in a new ADR.
+
+2. **[2026-10-03] High-precision agentic document search (filesystem tools, iterative loop, hybrid retrieval)**
+   Do instead: follow `docs/plans/001-precision-search.md` phase by phase (Phase 0 is item 1); move each finished phase to CHANGELOG.md.
 
 ## User Directives
+0. **[2026-10-03] Plans live in `docs/plans/` as ordered, numbered `NNN-plan-name.md`**
+   Do instead: use the next free zero-padded number (never renumber) and reference the plan from the Backlog.
+
 1. **[2026-10-03] Done backlog items go to CHANGELOG.md before commit**
    Do instead: remove the item from the napkin Backlog and add a one-line description under `## Unreleased` in `CHANGELOG.md`.
 
