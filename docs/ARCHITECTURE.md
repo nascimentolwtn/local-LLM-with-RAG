@@ -2,7 +2,7 @@
 
 Experimental sandbox for **agentic RAG** using local LLMs via Ollama and Pydantic AI.
 Unlike fixed RAG pipelines, the agent decides when and how to search documents.
-Decisions are recorded in [docs/adr/](docs/adr/README.md).
+Decisions are recorded in [docs/adr/](adr/README.md).
 
 **Key constraint:** Ollama must be running locally at `http://localhost:11434`.
 
@@ -125,6 +125,7 @@ a larger judge model scores answers 1-5 against golden answers + key facts.
 total time, time-to-first-text, judge score, covered facts.
 
 **Outputs** (`bench/results/`, gitignored):
+
 - `raw/<model>.jsonl` - full raw outputs per model
 - `scores.csv` - one row per (model, question)
 - `summary.md` - per-model averages + per-question score table
