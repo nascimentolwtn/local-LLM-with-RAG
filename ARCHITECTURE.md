@@ -20,6 +20,7 @@ interfaces/streamlit_app.py ──▶ core/agent.py (ResearchAgent) ──▶ Ol
 ```
 
 **Core flow:**
+
 1. Documents loaded from a folder into LanceDB (PDF, Word, PowerPoint, Excel,
    Markdown, HTML, CSV, JSON via MarkItDown).
 2. `ResearchAgent` uses Pydantic AI with a `search_documents` tool.
